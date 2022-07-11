@@ -1,0 +1,115 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Your Questions
+{% endblock %}
+
+{% block main %}
+    <p><b>Add new Questions</b></p>
+    <form action="{{ url_for('main.teacher_questions') }}" method="POST">
+        <input type="hidden" name="add_or_remove" value="a">
+        <div class="form-group">            
+            <select class="form-control" name="subject_of_teacher">
+                <option disabled selected value="">Choose Subject</option>
+                {% for subject in subjects %}
+                    <option value="{{ subject }}">{{ subject }}</option>
+                {% endfor %}
+            </select>
+        
+            <select class="form-control" name="classs_of_teacher">
+                <!-- <option disabled selected value="">Choose Class</option> -->
+                <option disabled selected value="">Choose Grade</option>
+                {% for classs in classes %}
+                    <option value="{{ classs }}">{{ classs }}</option>
+                {% endfor %}
+            </select>
+            
+            <input class="form-control" name="exam_type" placeholder="Exam type, e.g. Mid Term" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Add Question</button>
+        <h1> </h1>
+    </form>
+
+    
+    <p><b>Remove existing Questions</b></p>
+    <form action="{{ url_for('main.teacher_questions') }}" method="POST">
+        <input type="hidden" name="add_or_remove" value="r">
+        <div class="form-group">            
+            <select class="form-control" name="subject_of_teacher">
+                <option disabled selected value="">Choose Subject</option>
+                {% for subject in subjects %}
+                    <option value="{{ subject }}">{{ subject }}</option>
+                {% endfor %}
+            </select>
+        
+            <select class="form-control" name="classs_of_teacher">
+                <!-- <option disabled selected value="">Choose Class</option> -->
+                <option disabled selected value="">Choose Grade</option>
+                {% for classs in classes %}
+                    <option value="{{ classs }}">{{ classs }}</option>
+                {% endfor %}
+            </select>
+            
+            <input class="form-control" name="exam_type" placeholder="Exam type, e.g. First Term" type="text">
+        </div>
+        <button class="btn btn-danger" type="submit">Remove Question</button>
+        <h1> </h1>
+    </form>
+
+    <h1>All Questions</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Teacher ID</th>
+                <th>Question ID</th>
+                <th>Question Term</th>
+                <th>Subject ID</th>
+                <th>Subject Name</th>
+                <!-- <th>Subject Class</th> -->
+                <th>Subject Grade</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="4"></td>
+                <td>{{ final_value }}</td>
+            </tr>
+        </tfoot>
+
+        <tbody>
+            {% for question in questions_list %}
+                <tr>
+                    <td>{{ current_user.id }}</td>
+                    <td>{{ question[0].id }}</td>
+                    <td>{{ question[0].name }}</td>
+                    <td>{{ question[1].id }}</td>
+                    <td>{{ question[1].name }}</td>
+                    <td>{{ question[1].classs }}</td>
+                    
+                    <!--<td><a href="edit_question/{{question[0].id}}" class="btn btn-default pull-right">Edit</a></td>-->
+                    <td><a href="{{ url_for('main.edit_question', id=question[0].id) }}" class="btn btn-outline-dark pull-right"><b>Edit</b></a></td>
+
+                    <td>
+                        <form action="{{ url_for('main.teacher_questions') }}" method="post">
+                            <input type="hidden" name="add_or_remove" value="r">
+                            <input type="hidden" name="exam_type" value="{{ question[0].name }}">
+                            <input type="hidden" name="subject_of_teacher" value="{{ question[1].name }}">
+                            <input type="hidden" name="classs_of_teacher" value="{{ question[1].classs }}">
+                            <input type="submit" value="Delete" class="btn btn-danger">
+                        </form>
+                    </td>
+
+                    <td>
+                        <td><a href="{{ url_for('main.answers', id=question[0].id) }}" class="btn btn-dark pull-right"><b>See Submissions</b></a></td>
+                    </td>
+                    
+                </tr>
+            {% endfor %}
+
+            <!-- <tr>
+                <td colspan="4">CASH</td>
+                <td>{{ remaining_cash }}</td>
+            </tr> -->
+        </tbody>
+    </table>
+{% endblock %}

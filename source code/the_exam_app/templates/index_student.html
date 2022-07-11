@@ -1,0 +1,240 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block main %}
+
+    <h2>Upcoming Exams</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Exam Start Time</th>
+                <th>Exam End Time</th>
+                <!--<th>Student ID</th>-->
+                <!-- <th>Teacher ID</th> -->
+                <!--<th>Teacher Name</th>-->
+                <th>Subject ID</th>
+                <th>Subject Name</th>
+                <!-- <th>Subject Class</th> -->
+                <th>Subject Grade</th>
+                <th>Question ID</th>
+                <!-- <th>Question Name</th> -->
+                <!-- <th>Answer ID</th> -->
+                <!-- <th>Marks Obtained</th> -->
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="5"></td>
+                <td>{{ final_value }}</td>
+            </tr>
+        </tfoot>
+
+        <tbody>
+            {% for item in subjectPlusExam_list %}
+                <tr>
+                    <!--{{ subjectPlusExam_list.index(item) }}-->
+                    <td>{{ item[3].examstart_datetime }}</td>
+                    <td>{{ item[3].examend_datetime }}</td>
+                    <!--<td>{{ current_user.id }}</td>-->
+                    <!-- <td>{{ item[0].id }}</td> -->
+                    <!--<td>{{ item[0].name }}</td>-->
+                    <td>{{ item[2].id }}</td>
+                    <td>{{ item[2].name }}</td>
+                    <td>{{ item[2].classs }}</td>
+                    <td>{{ item[3].id }}</td>
+                    <!-- <td>{{ item[3].name }}</td> -->                    
+                    
+                    <!--<td><a href="edit_question/{{item[0].id}}" class="btn btn-default pull-right">Edit</a></td>-->
+                    <!-- <td><a href="{{ url_for('main.edit_question', id=item[0].id) }}" class="submit btn btn-dark"><b>Start Exams</b></a></td> -->
+                    <td>
+                        <form action="{{url_for('main.edit_answer', id=item[3].id)}}" method="post">
+                            <input type="hidden" name="add_or_remove" value="view">
+                            <input class="submit btn btn-dark" type="submit" value="Start Exam">
+                        </form>
+                    </td>
+
+                    <td>
+                        <!-- <input class="submit1" type="submit" id="checktimer" value="Check"/>
+                        <p>Hey nubs</p> -->
+
+                        <!-- <script src="index_student.js"></script> -->
+                        <!-- <script src="{{ url_for('static', filename='index_student.js') }}"></script> -->
+
+                        <script type="text/javascript" defer="defer">
+                            // var enableDisable = function (x){
+                            enableDisable = function (x){
+                                var UTC_year = new Date().getUTCFullYear();
+                                var UTC_month = new Date().getUTCMonth() + 1;  // month[0] indicates January
+                                    // the first month of the year.
+                                var UTC_date = new Date().getUTCDate();  //Date not adjusted to UTC+6 timezone
+                                var UTC_hours = new Date().getUTCHours() + 6;  //getting time in UTC+6 timezone
+                                    if (UTC_hours > 23 && UTC_hours < 30) {  // UTC_hours have more than 23 hours 
+                                    // because of adding 6
+                                        UTC_date = UTC_date + 1;
+                                    }    
+                                    if (UTC_hours > 23){
+                                        UTC_hours = 0 + (UTC_hours - 24);
+                                    }
+                                var UTC_minutes = new Date().getUTCMinutes();
+                                var day = new Date().getUTCDay();
+
+                                timestart = "{{ item[3].examstart_datetime }}"
+                                timestart1 = timestart.split(' ')
+                                // time2 = parseInt(timestart)
+                                // time3 = timestart.replace(/\D/g,'');
+                                timestart40 = timestart1[0].split('-')  // year, month, and date/day
+                                timestart41 = timestart1[1].split(':')  // hours and minutes
+                                // time41int = parseInt(timestart41)
+
+                                timeend = "{{ item[3].examend_datetime }}"
+                                timeend1 = timeend.split(' ')
+                                // time2 = parseInt(timestart)
+                                // time3 = timestart.replace(/\D/g,'');
+                                timeend40 = timeend1[0].split('-')  // year, month, and date/day
+                                timeend41 = timeend1[1].split(':')  // hours and minutes
+                                // time41int = parseInt(timestart41)
+
+                                console.log(UTC_year, UTC_month, UTC_date, UTC_hours, 
+                                    UTC_minutes, day, typeof(UTC_year));
+                                console.log(x, timestart, typeof(timestart), timestart1, timestart40,timestart41 
+                                    , timestart41[1], typeof(timestart41[0]));
+                                // , time41int, typeof(time41int));
+                                console.log(x, timeend, typeof(timeend), timeend1, timeend40, timeend41
+                                    , timeend41[1], typeof(timeend41[0]));                                
+                                
+                                if (day == 1 ) {
+                                    console.log('if---The day is '+ day + '.')
+                                    document.getElementsByClassName('submit')[x].disabled = false;  //w3schools, map function
+                                    //document.getElementById('timer').style.display = 'block';
+                                    // console.log('shafin',document.getElementsByClassName('submit'))
+                                    // console.log('shafin',document.getElementsByClassName('submit')[x].disabled)
+                                }
+                                else {
+                                    if (UTC_year == timestart40[0]) {
+                                        console.log('el if')
+                                        if (UTC_month == timestart40[1]) {
+                                            console.log('el if if')
+                                            if (UTC_date == timestart40[2]) {
+                                                console.log('el if if if')                                                
+                                                // if (UTC_hours >= 16 && UTC_hours <= 22) {
+                                                // if (UTC_hours >= timestart41[0] && UTC_hours <= (parseInt(timestart41[0]) + 1) ) {
+                                                if ( UTC_hours >= timestart41[0] && UTC_hours <= timeend41[0] ) {
+                                                    console.log('el+if+if+if+if')
+                                                    // if (UTC_minutes >= timestart41[1] && UTC_minutes < (parseInt(timestart41[1]) + 1) ) {
+                                                    if ( UTC_minutes >= timestart41[1] && UTC_minutes < timeend41[1] ) {
+                                                        console.log('el+if+if+if+if+if')
+                                                        console.log(timestart41[0], timestart41[1])
+                                                        console.log(timeend41[0], timeend41[1])
+                                                        document.getElementsByClassName('submit')[x].disabled = false;//setAttribute('disabled');
+                                                        //document.getElementById('timer').style.display = 'none';
+                                                    }
+                                                    else {
+                                                        console.log('el+ifififififel')
+                                                        document.getElementsByClassName('submit')[x].disabled = true;
+                                                    } 
+                                                } else {
+                                                    console.log('el+ififififel')
+                                                    document.getElementsByClassName('submit')[x].disabled = true;
+                                                }
+                                            } else {
+                                                console.log('el+ifififel')
+                                                document.getElementsByClassName('submit')[x].disabled = true;
+                                            }
+                                        } else {
+                                            console.log('el+ififel')
+                                            document.getElementsByClassName('submit')[x].disabled = true;
+                                        }
+                                    } else {
+                                        console.log('el+ifel')
+                                        document.getElementsByClassName('submit')[x].disabled = true;//removeAttribute('disabled');
+                                        //document.getElementById('timer').style.display = 'block';
+                                    }
+                                }
+                            };
+
+                            document.getElementsByClassName('submit')["{{ subjectPlusExam_list.index(item) }}"].disabled = true;
+                            
+                            // enableDisable("{{ subjectPlusExam_list.index(item) }}");  //!!what is the data type of
+                            // var buttonState = setInterval(enableDisable("{{ subjectPlusExam_list.index(item) }}"), 1000);
+                            var buttonState = setInterval(enableDisable, 1000, ("{{ subjectPlusExam_list.index(item) }}"));  //[1]
+                            
+                            // "{{ subjectPlusExam_list.index(item) }}" ?
+
+                        </script>
+                    </td>
+                    
+                </tr>
+            {% endfor %}
+
+            <!-- <tr>
+                <td colspan="5">CASH</td>
+                <td>{{ remaining_cash }}</td>
+            </tr> -->
+        </tbody>
+    </table>
+    
+    <h2>All Subjects</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Teacher ID</th>
+                <th>Teacher Name</th>
+                <th>Subject ID</th>
+                <th>Subject Name</th>
+                <!-- <th>Subject Class</th> -->
+                <th>Subject Grade</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="5"></td>
+                <td>{{ final_value }}</td>
+            </tr>
+        </tfoot>
+
+        <tbody>
+            {% for item in subjectPlusExam_list %}
+                <tr>
+                    <td>{{ current_user.id }}</td>
+                    <td>{{ item[0].id }}</td>
+                    <td>{{ item[0].name }}</td>
+                    <td>{{ item[2].id }}</td>
+                    <td>{{ item[2].name }}</td>
+                    <td>{{ item[2].classs }}</td>
+                    
+                    <!--<td><a href="edit_question/{{item[0].id}}" class="btn btn-default pull-right">Edit</a></td>-->
+                    <!-- <td><a href="{{ url_for('main.edit_question', id=item[0].id) }}" class="btn btn-outline-dark pull-right"><b>Edit</b></a></td>
+
+                    <td>
+                        <form action="{{url_for('main.edit_question', id=item[0].id)}}" method="post">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="submit" value="Delete" class="btn btn-danger">
+                        </form>
+                    </td> -->
+                    
+                </tr>
+            {% endfor %}
+
+            <!-- <tr>
+                <td colspan="5">CASH</td>
+                <td>{{ remaining_cash }}</td>
+            </tr> -->
+        </tbody>
+    </table>
+
+    
+
+{% endblock %}
+
+
+
+<!--
+Links/notes
+[1] setInterval() - Mozilla Developer Network
+        https://developer.mozilla.org/en-US/docs/Web/API/setInterval
+[2]
+-->

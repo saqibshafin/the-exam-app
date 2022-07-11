@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Portfolio
+{% endblock %}
+
+{% block main %}
+    <!--<ul>
+        int count = 0;
+        {% for row in rows %}
+            <li>{{ row["symbol"] }} {{ row["name"] }} {{ row["SUM(shares)"] }}
+            {{ row["price"] }} {{ aa[count] }}</li>
+            count = count+1;
+        {% endfor %}
+    </ul>-->
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Shares</th>
+                <th>Price</th>
+                <th>TOTAL</th>
+                <th>Buy/Sell</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="4"></td>
+                <td>{{ final_value }}</td>
+            </tr>
+        </tfoot>
+
+        <tbody>
+            {% for row in rows %}
+                <tr>
+                    <td>{{ row["symbol"] }}</td>
+                    <td>{{ row["name"] }}</td>
+                    <td>{{ row["shares"] }}</td>
+                    <td>{{ row["price"] }}</td>
+                    <td>{{ aa[loop.index - 1] }}</td>
+                    <!--<td>{{ loop.index }}</td>-->
+                    <td>
+                        <form action="/" method="post">
+                            <!--<div--><class="form-group">
+                                <input autocomplete="off" class="form-control" min="1" max="5000" id="shares" name="shares" placeholder="Shares" type="number">
+                                <input type="hidden" id="index" name="symbol" value="{{ row["symbol"] }}">
+                                <button class="btn btn-primary" id="submit1" name="buy" type="submit" enabled>Buy</button>
+                                <button class="btn btn-primary" id="submit2" name="sell" type="submit" enabled>Sell</button>
+                            <!--</div>-->
+                        </form>
+                        <!--<script>
+                            document.querySelector("#shares").onkeyup = function() {
+                                if (document.querySelector("#shares").value === "") {
+                                    document.querySelector("#submit1").disabled = true;
+                                    document.querySelector("#submit2").disabled = true;
+                                }
+                                else {
+                                    document.querySelector("#submit1").disabled = false;
+                                    document.querySelector("#submit2").disabled = false;
+                                }
+                            }
+                        </script>-->
+                    </td>
+                </tr>
+            {% endfor %}
+
+            <tr>
+                <td colspan="4">CASH</td>
+                <td>{{ remaining_cash }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

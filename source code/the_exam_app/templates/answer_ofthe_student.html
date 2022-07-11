@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Check Answer
+{% endblock %}
+
+{% block main %}
+    <h4>
+        <div>Question ID: {{ answer.question_id }}</div>
+        <div>Total marks: {{ question.total_marks }}</div>
+    </h4>
+    <br></br>
+
+    <h1>The Answer</h1>
+    <p>{{ answer.answer | safe }}</p>
+    <br></br>
+    
+    <form action="{{ url_for('main.answers', id=answer.id) }}" method="POST">
+        <input type="hidden" name="add_or_remove" value="checked">
+        <!-- <input type="text" name=question_id value="{{ answer.question_id}}"> -->
+        <!-- <select class="form-control" name="totalmarks">
+            <option disabled selected value="">Total Marks</option>
+
+        </select> -->
+        <!-- <input type="number" id="marks" name="totalmarks" placeholder="Total marks"> -->
+        <input class="form-control" name="marksAttained" placeholder="Marks Attained, e.g. 10" type="text">
+            <!-- required="required"> -->
+        
+        &nbsp;&nbsp;&nbsp;
+        <!-- <br></br> -->
+        <input type="submit" value="Confirm attained marks!" class="btn btn-danger">
+    </form>
+{% endblock %}

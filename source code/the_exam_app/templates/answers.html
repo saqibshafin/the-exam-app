@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    All Answers
+{% endblock %}
+
+{% block main %}
+    <p>{{ question.question | safe }}</p>
+
+    <h1>All Submitted Answers</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <!-- <th>Subject ID</th> -->
+                <!-- <th>Subject Name</th> -->
+                <th>Question ID</th>
+                <!-- <th>Q</th> -->
+                <th>Student ID</th>
+                <th>Student Name</th>
+                <th>Answer ID</th>
+                <th>Marks Obtained</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="4"></td>
+                <td>{{ final_value }}</td>
+            </tr>
+        </tfoot>
+
+        <tbody>
+            {% for student in students_list %}
+                <tr>
+                    <td>{{ question.id }}</td>
+                    <td>{{ student[0].id }}</td>
+                    <td>{{ student[0].name }}</td>
+                    <td>{{ student[1].id }}</td>
+                    <td>{{ student[1].marks_attained }}</td>
+                    
+                    <!-- <td><a href="{{ url_for('main.answers', id=question.id) }}" class="btn btn-outline-dark pull-right"><b>Edit</b></a></td>
+
+                    <td>
+                        <form action="{{ url_for('main.teacher_questions') }}" method="post">
+                            <input type="hidden" name="add_or_remove" value="r">
+                            <input type="submit" value="Delete" class="btn btn-danger">
+                        </form>
+                    </td> -->
+
+                    <td>
+                        <form action="{{ url_for('main.answers', id=student[1].id) }}" method="post">
+                            <input type="hidden" name="add_or_remove" value="check">
+                            <input type="submit" value="Check Answer" class="btn btn-outline-dark">
+                        </form>
+                    </td>
+                    
+                </tr>
+            {% endfor %}
+
+            <!-- <tr>
+                <td colspan="4">CASH</td>
+                <td>{{ remaining_cash }}</td>
+            </tr> -->
+        </tbody>
+    </table>
+{% endblock %}

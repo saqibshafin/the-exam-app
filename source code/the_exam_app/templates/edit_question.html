@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+    <h1>Edit Question</h1>
+    
+    {% from "includes/_formhelpers.html" import render_field %}
+    <form action="{{ url_for('main.edit_question', id=id) }}" method="POST">
+        <label><b>Exam Starting date and time:</b> </label>
+        <!--<input type="datetime-local" name="exam_datetime">-->
+        <input type="date" name="examstart_date">
+        <input type="time" name="examstart_time">
+        <br></br>
+
+        <label><b>Exam Ending date and time:</b> </label>
+        <!--<input type="datetime-local" name="exam_datetime">-->
+        <input type="date" name="examend_date">
+        <input type="time" name="examend_time">
+        <br></br>
+
+        <div class="form-group">
+            {{ render_field(form.body, class_="form-control", id="editor") }}
+        </div>
+        <input type="hidden" name="add_or_remove" value="ed">
+        <input type="hidden" name="question_id" value="{{ question_id }}">
+        <p><input class="btn btn-primary" type="submit" value="Submit">
+    </form>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <p>You are registering as {{ x }} "{{ register_type }}"</p>   
+
+    <!--<form action="/register" method="post">-->
+    <form action="{{ url_for('auth.register') }}" method="post">
+        <input type="hidden" id="register" name="register_type" value="{{ register_type}}">
+        
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="name" placeholder="Username" type="text">
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="password" placeholder="Password" type="password">
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="password_again" placeholder="Password (again)" type="password">
+        </div>
+        <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <form action="/register_type" method="post">
+        <div class="form-group">
+            <select class="form-control" name="selected_register_type">
+                <option disabled selected value="">Choose</option>
+                {% for row in register_types %}
+                    <option value="{{ row }}">{{ row }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Proceed</button>
+    </form>
+{% endblock %}

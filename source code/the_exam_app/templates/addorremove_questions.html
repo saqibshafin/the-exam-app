@@ -1,0 +1,109 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Portfolio
+{% endblock %}
+
+{% block main %}
+    <p><b>Add new Questions</b></p>
+    <form action="{{ url_for('main.teacher_questions') }}" method="POST">
+        <input type="hidden" name="add_or_remove" value="a">
+        <div class="form-group">            
+            <select class="form-control" name="subject_of_teacher">
+                <option disabled selected value="">Choose Subject</option>
+                {% for subject in subjects %}
+                    <option value="{{ subject }}">{{ subject }}</option>
+                {% endfor %}
+            </select>
+        
+            <select class="form-control" name="classs_of_teacher">
+                <option disabled selected value="">Choose Class</option>
+                {% for classs in classes %}
+                    <option value="{{ classs }}">{{ classs }}</option>
+                {% endfor %}
+            </select>
+            
+            <input class="form-control" name="exam_type" placeholder="Exam type, e.g. Mid Term" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Add Question</button>
+        <h1> </h1>
+    </form>
+
+    
+    <p><b>Remove existing Questions</b></p>
+    <form action="{{ url_for('main.teacher_questions') }}" method="POST">
+        <input type="hidden" name="add_or_remove" value="r">
+        <div class="form-group">            
+            <select class="form-control" name="subject_of_teacher">
+                <option disabled selected value="">Choose Subject</option>
+                {% for subject in subjects %}
+                    <option value="{{ subject }}">{{ subject }}</option>
+                {% endfor %}
+            </select>
+        
+            <select class="form-control" name="classs_of_teacher">
+                <option disabled selected value="">Choose Class</option>
+                {% for classs in classes %}
+                    <option value="{{ classs }}">{{ classs }}</option>
+                {% endfor %}
+            </select>
+            
+            <input class="form-control" name="exam_type" placeholder="Exam type, e.g. First Term" type="text">
+        </div>
+        <button class="btn btn-danger" type="submit">Remove Question</button>
+        <h1> </h1>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Teacher ID</th>
+                <th>Question ID</th>
+                <th>Question Term</th>
+                <th>Subject ID</th>
+                <th>Subject Name</th>
+                <th>Subject Class</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="4"></td>
+                <td>{{ final_value }}</td>
+            </tr>
+        </tfoot>
+
+        <tbody>
+            {% for question in questions_list %}
+                <tr>
+                    <td>{{ current_user.id }}</td>
+                    <td>{{ question[0].id }}</td>
+                    <td>{{ question[0].name }}</td>
+                    <td>{{ question[1].id }}</td>
+                    <td>{{ question[1].name }}</td>
+                    <td>{{ question[1].classs }}</td>
+                    
+                    <!--<td>{{ loop.index }}</td>-->
+                    <td>
+                        <form action="{{ url_for('main.edit_question') }}" method="post">
+                            <input type="hidden" name="add_or_remove" value="ei">
+                            <input type="hidden" id="index" name="question_id" value="{{ question[0].id }}">
+                            <button class="btn btn-outline-dark" id="submit1" name="edit" type="submit" enabled><b>Edit</b></button>
+                            <!--<button class="btn btn-danger" id="submit1" name="remove" type="submit" enabled>Remove</button>-->
+                        </form>
+                        <form action="{{ url_for('main.edit_question') }}" method="post">
+                            <input type="hidden" name="add_or_remove" value="r">
+                            <input type="hidden" id="index" name="question_id" value="{{ question[0].id }}">
+                            <button class="btn btn-danger" id="submit1" name="remove" type="submit" enabled>Remove</button>
+                        </form>
+                        <!--  **How do we keep the buttons side by side? OK, do the following!-->
+                    </td>
+                </tr>
+            {% endfor %}
+
+            <tr>
+                <td colspan="4">CASH</td>
+                <td>{{ remaining_cash }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

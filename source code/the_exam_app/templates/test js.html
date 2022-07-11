@@ -1,0 +1,48 @@
+<input class="submit" type="submit" id="checktimer" value="Check"/>
+<input class="submit" type="submit" id="checktimer2" value="Check"/>
+<input class="submit" type="submit" id="checktimer3" value="Check"/>
+<input class="submit" type="submit" id="checktimer4" value="Check"/>
+<input class="submit" type="submit" id="checktimer5" value="Check"/>
+<!--<p id=timer style="display: none;">Lorem ipsum</p>-->
+<p>Hey nubs</p>
+
+    <script type="text/javascript" defer="defer">
+        
+        var enableDisable = function(){
+            var UTC_hours = new Date().getUTCHours() + 6;
+            var day = new Date().getDay();
+            console.log(UTC_hours, day);
+            
+            if (day == 2) {
+                console.log('if')
+
+                //document.getElementById('checktimer').disabled = true;
+                document.getElementsByClassName('submit')[0].disabled = true;
+                document.getElementsByClassName('submit')[1].disabled = true;
+                document.getElementsByClassName('submit')[2].disabled = true;
+                document.getElementsByClassName('submit')[3].disabled = true;
+                document.getElementsByClassName('submit')[4].disabled = true;
+                //document.getElementById('timer').style.display = 'block';    
+                console.log('sabbir ',document.getElementById('checktimer').disabled)
+                
+                
+                console.log('shafin',document.getElementsByClassName('submit'))
+                console.log('shafin',document.getElementsByClassName('submit')[0].disabled)
+            }
+            else {
+                if (UTC_hours >= 16 && UTC_hours <= 22) {
+                    document.getElementById('checktimer').disabled = false;//setAttribute('disabled');
+                    console.log('el+if')
+                    //document.getElementById('timer').style.display = 'none';
+                } else {
+                    document.getElementById('checktimer').disabled = true;//removeAttribute('disabled');
+                    //document.getElementById('timer').style.display = 'block';
+                    console.log('el+el')
+                }
+            }
+        };
+
+        //setInterval(enableDisable, 1000*60);
+        enableDisable();
+        
+    </script>

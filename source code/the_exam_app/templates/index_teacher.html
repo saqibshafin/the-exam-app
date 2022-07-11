@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block main %}
+    <!--<ul>
+        int count = 0;
+        {% for row in rows %}
+            <li>{{ row["symbol"] }} {{ row["name"] }} {{ row["SUM(shares)"] }}
+            {{ row["price"] }} {{ aa[count] }}</li>
+            count = count+1;
+        {% endfor %}
+    </ul>-->
+
+    <form action="{{ url_for('main.teacher') }}" method="post">
+        <input type="hidden" name="add_or_delete" value="a">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="new_subject" placeholder="Add New Subject" type="text">
+        </div>
+        <div class="form-group">
+            <!-- <input class="form-control" name="classs" placeholder="Class" type="text"> -->
+            <input class="form-control" name="classs" placeholder="Grade" type="text">
+        </div>
+        <button class="btn btn-primary" name="add_subject" type="submit" enabled>Add Subject</button>
+        <h1></h1>
+    </form>
+
+    <form action="{{ url_for('main.teacher') }}" method="post">
+        <input type="hidden" name="add_or_delete" value="d">
+        <div class="form-group">
+            <select class="form-control" name="subject_to_delete">
+                <option disabled selected value="">Choose Subject</option>
+                {% for subject in subjects %}
+                    <option value="{{ subject }}">{{ subject }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <select class="form-control" name="classs_to_delete">
+                <!-- <option disabled selected value="">Choose Class</option> -->
+                <option disabled selected value="">Choose Grade</option>
+                {% for classs in classes %}
+                    <option value="{{ classs }}">{{ classs }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button class="btn btn-primary" name="delete_subject" type="submit" enabled>Delete Subject</button>
+        <h1></h1>
+    </form>
+
+    <form action="{{ url_for('main.teacher_students') }}" method="get">
+        <!--<input type="hidden" name="add_or_delete" value="s">-->
+        <button class="btn btn-primary" name="add_students" type="submit" enabled>Current Students</button>
+        <h1></h1>
+    </form>
+
+    <form action="{{ url_for('main.teacher_questions') }}" method="get">
+        <button class="btn btn-primary" name="add_students" type="submit" enabled>Your Questions</button>
+        <h1></h1>
+    </form>
+{% endblock %}
